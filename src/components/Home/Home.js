@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import axios from "axios";
 import './home.css';
+import { connect } from 'react-redux';
+import { updateUser } from '../../redux/reducers/userReducer';
 
 class Home extends Component {
   constructor(props) {
@@ -23,7 +25,8 @@ class Home extends Component {
     axios
       .post("/api/auth/register", { email, password })
       .then((res) => {
-        console.log(res);
+        console.log(res.data);
+        this.props.updateUser(res.data);
         this.props.history.push("/profile");
       })
       .catch((err) => {
@@ -39,7 +42,8 @@ class Home extends Component {
     axios
       .post("/api/auth/login", { email, password })
       .then((res) => {
-        console.log(res);
+        console.log(res.data);
+        this.props.updateUser(res.data);
         this.props.history.push("/profile");
       })
       .catch((err) => {
@@ -87,4 +91,8 @@ class Home extends Component {
   }
 }
 
-export default Home;
+const mapDispatchToProps = {
+  updateUser
+}
+
+export default connect( null, mapDispatchToProps )(Home);

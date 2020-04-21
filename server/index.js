@@ -19,6 +19,11 @@ app.use(
   })
 );
 
+app.use((req, res, next) => {
+  console.log(req.session);
+  next();
+})
+
 app.post('/api/auth/register', authCtrl.register);
 app.post('/api/auth/login', authCtrl.login);
 app.get('/api/auth/getUser', authCtrl.getUser);
